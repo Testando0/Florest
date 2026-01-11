@@ -27,6 +27,7 @@
         const accountId = '648085ab1193eeacc92d058d278a0d83'; // Substitua pelo seu Account ID da Cloudflare
         const apiToken = 'EZnH74dXipNmuwQOtCAcW1oLQzJ5oKbTnpgBqJUI'; // Substitua pelo seu API Token da Cloudflare
         const model = '@cf/black-forest-labs/flux-2-dev'; // Modelo mais fiel ao texto
+        const proxyUrl = 'https://corsproxy.io/?'; // Proxy CORS para contornar restrições
 
         document.getElementById('generateBtn').addEventListener('click', async () => {
             const prompt = document.getElementById('prompt').value.trim();
@@ -42,7 +43,8 @@
             generatedImage.src = ''; // Limpa imagem anterior
 
             try {
-                const response = await fetch(`https://api.cloudflare.com/client/v4/accounts/\( {accountId}/ai/run/ \){model}`, {
+                const apiUrl = `https://api.cloudflare.com/client/v4/accounts/\( {accountId}/ai/run/ \){model}`;
+                const response = await fetch(proxyUrl + encodeURIComponent(apiUrl), {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${apiToken}`,
